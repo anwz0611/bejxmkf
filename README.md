@@ -8,7 +8,7 @@
 - 组件化开发，横向解耦
 - 封装各种工具类，比如压缩图片、轮播器、查看大图、缓存工具、图片选择器，以common的module形式依赖
 - 各种封装好的依赖库，比如Irecyclerview：包含万能适配器、recyclerview的下拉刷新上拉加载更多、自定义刷新头和加载更多头；selectordialog：经常使用到的几种Dialog；oneKeyShareSDK：社交分享；微信和支付宝封装等等
-- 无关业务内容封装成model，基于此框架可以快速开发一个app
+
 
 ####用到的开源库有：
 - om.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar 
