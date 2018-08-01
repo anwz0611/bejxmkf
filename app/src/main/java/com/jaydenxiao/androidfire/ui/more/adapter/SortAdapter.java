@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.bean.addressBookInfoBeans;
 import com.jaydenxiao.androidfire.entity.PhoneDialog;
@@ -36,7 +35,7 @@ import java.util.Map;
  * @date:2016年7月5日下午5:36:05
  */
 public class SortAdapter extends BaseAdapter implements SectionIndexer {
-	private List<addressBookInfoBeans.WaterBookDetailListBean> list = null;
+	private  List<addressBookInfoBeans.WaterBookDetailListBean> list = null;
 	private Context mContext;
 	private int isshow;
 	private List<addressBookInfoBeans.WaterBookDetailListBean> list1 = new ArrayList<addressBookInfoBeans.WaterBookDetailListBean>();

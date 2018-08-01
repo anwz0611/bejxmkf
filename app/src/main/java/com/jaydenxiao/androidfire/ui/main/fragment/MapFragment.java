@@ -118,7 +118,8 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
     LinearLayout yh;
     @Bind(R.id.rg)
     RadioGroup rg;
-
+    @Bind(R.id.map_taime)
+    TextView timeView;
     @Bind(R.id.fab)
     FloatingActionMenu fab;
     @Bind(R.id.fab_qiehuan)
@@ -167,11 +168,7 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
         mapHDMarkers = new ArrayList<Marker>();
         initPresenter();
         initView();
-
-
         return rootView;
-
-
     }
 
 
@@ -187,7 +184,9 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
 
     @Override
     protected void initView() {
-
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String ThisTime = format.format(new Date());
+        timeView.setText(ThisTime);
         Mapinit();
         fab.setClosedOnTouchOutside(true);
         dialog = new ShapeLoadingDialog(getContext());
@@ -200,16 +199,9 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, zoomto));
             }
         });
-
-
         rg.setOnCheckedChangeListener(this);
-
-
         tabs.addTab(tabs.newTab().setText("工程巡查"));
-
         tabs.addTab(tabs.newTab().setText("渠道水情"));
-
-
 //        tabs.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -239,18 +231,13 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
                     aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, zoomto));
 //                    mPresenter.getWaterSituationDataRequest(ThisTime, "", "0", "1", "300", "", "", "");
                     mPresenter.getWaterMapSituationDataRequest(ThisTime);
-
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 //        wsd_kaiguan = (SwitchCompat) nav_view.getMenu().findItem(R.id.nav_night_mode).getActionView().findViewById(R.id.wsd_kaiguan);
@@ -285,14 +272,12 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
 //        });
         mPresenter.getPatrolRecordDataRequest();
     }
-
     private void Mapinit() {
         if (aMap == null) {
             aMap = mapView.getMap();
             center = new LatLng(48.016566, 87.003232);
             zoomto = Float.parseFloat("9");
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, zoomto));
-
             mUiSettings = aMap.getUiSettings();
             mUiSettings.setScaleControlsEnabled(true);// 显示比例尺
             mUiSettings.setCompassEnabled(true);// 显示指南针
@@ -332,7 +317,6 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
                 polylineOption.width(6).color(Color.BLUE);
                 aMap.addPolyline(polylineOption);
 
-
             }
         }).start();
     }
@@ -366,13 +350,10 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
         }
         return list;
     }
-
     @OnClick({R.id.fab, R.id.fab_qiehuan, R.id.fab_list, R.id.fab_upload})
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.fab:
-
                 break;
             case R.id.fab_qiehuan:
                 if (aMap.getMapType() == 1) {
@@ -380,7 +361,6 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
                 } else if (aMap.getMapType() == 2) {
                     aMap.setMapType(1);
                 }
-
                 break;
             case R.id.fab_list:
                 fab.close(true);
@@ -389,11 +369,8 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
             case R.id.fab_upload:
                 dialog.loading("定位中....");
                 aMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-
                 location();
                 fab.close(true);
-
-
                 break;
         }
 
@@ -577,10 +554,8 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
         title.setText(marker.getTitle());
         final String yujingnr = station.getAnnex();
         yjnr.setText(yujingnr);
-
         return infoWindow;
     }
-
     private View showQDStation(final Marker marker) {
         final View infoWindow;
         infoWindow = getActivity().getLayoutInflater().inflate(R.layout.cz_hedao_info_window, null);
@@ -640,7 +615,10 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
     @Override
     public void onDistrictSearched(DistrictResult districtResult) {
         district = districtResult.getDistrict();
-        addLinePoint();
+        if (district.size()>0&&district!=null){
+            addLinePoint();
+        }
+
     }
 
     @Override

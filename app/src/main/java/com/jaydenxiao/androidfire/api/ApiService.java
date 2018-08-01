@@ -7,7 +7,9 @@ import com.jaydenxiao.androidfire.bean.LoginsBeans;
 import com.jaydenxiao.androidfire.bean.NewsDetail;
 import com.jaydenxiao.androidfire.bean.NewsSummary;
 import com.jaydenxiao.androidfire.bean.PatrolDataBeans;
+import com.jaydenxiao.androidfire.bean.PatrolUploadingBeans;
 import com.jaydenxiao.androidfire.bean.PolicyLawInfoBeans;
+import com.jaydenxiao.androidfire.bean.SendMessageBeans;
 import com.jaydenxiao.androidfire.bean.User;
 import com.jaydenxiao.androidfire.bean.VideoData;
 import com.jaydenxiao.androidfire.bean.addressBookInfoBeans;
@@ -199,10 +201,19 @@ public interface ApiService {
     Observable<PatrolDataBeans> getPatrolData(
     );
 
+
+
+    //
+    @POST("sendMessage")
+    Observable<SendMessageBeans> sendMessage(
+            @Query("phoneList") String phoneList,
+            @Query("content") String content
+    );
+
     //巡查上传
     @Multipart
     @POST("patrolUploading")
-    Observable<Result<String>> patrolUploading(
+    Observable<PatrolUploadingBeans> patrolUploading(
             @Part("can") RequestBody can,
             @Part("cantype") RequestBody cantype,
             @Part("id") RequestBody id,

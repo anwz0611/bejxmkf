@@ -147,15 +147,15 @@ public class PhoneAdapter extends BaseExpandableListAdapter {
 		for (int i = 0; i < childCheckBox.get(groupPosition).size(); i++) {
 			childCheckBox.get(groupPosition).get(i).put(C_CB, isChecked);
 			if (isChecked) {
-				if (!checkedChildrenString.contains(list.get(groupPosition).getWaterBookDetailList().get(i).getDwdh())) {
+				if (!checkedChildrenString.contains(list.get(groupPosition).getWaterBookDetailList().get(i).getDwlxrdh())) {
 					checkedChildren.add(list.get(groupPosition).getWaterBookDetailList().get(i));
-					checkedChildrenString.add(list.get(groupPosition).getWaterBookDetailList().get(i).getDwdh());
+					checkedChildrenString.add(list.get(groupPosition).getWaterBookDetailList().get(i).getDwlxrdh());
 					PhoneListActivity.getmList(0, list.get(groupPosition).getWaterBookDetailList().get(i));
 				}
 			} else {
-				if (checkedChildrenString.contains(list.get(groupPosition).getWaterBookDetailList().get(i).getDwdh())) {
+				if (checkedChildrenString.contains(list.get(groupPosition).getWaterBookDetailList().get(i).getDwlxrdh())) {
 					checkedChildren.remove(list.get(groupPosition).getWaterBookDetailList().get(i));
-					checkedChildrenString.remove(list.get(groupPosition).getWaterBookDetailList().get(i).getDwdh());
+					checkedChildrenString.remove(list.get(groupPosition).getWaterBookDetailList().get(i).getDwlxrdh());
 					PhoneListActivity.getmList(1, list.get(groupPosition).getWaterBookDetailList().get(i));
 				}
 			}
@@ -200,7 +200,7 @@ public class PhoneAdapter extends BaseExpandableListAdapter {
 		} else if (isshow == 2) {
 			holder.select.setVisibility(View.VISIBLE);
 		}
-		final String childrenId = list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwdh();
+		final String childrenId = list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwlxrdh();
 		holder.Mobile.setText(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwlxrdh());
 		holder.Name.setText(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwlxr());
 		// holder.OfficeTel.setText(list.get(groupPosition).getResultlist().get(childPosition).getOfficeTel());
@@ -215,7 +215,7 @@ public class PhoneAdapter extends BaseExpandableListAdapter {
 					if (!checkedChildrenString.contains(childrenId)) {
 						checkedChildren.add(list.get(groupPosition).getWaterBookDetailList().get(childPosition));
 						checkedChildrenString
-								.add(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwdh());
+								.add(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwlxrdh());
 						PhoneListActivity.getmList(0, list.get(groupPosition).getWaterBookDetailList().get(childPosition));
 
 					}
@@ -223,7 +223,7 @@ public class PhoneAdapter extends BaseExpandableListAdapter {
 					int[] count = new int[list.size()];
 					count[groupPosition] = list.get(groupPosition).getWaterBookDetailList().size();
 					for (int i = 0; i < list.get(groupPosition).getWaterBookDetailList().size(); i++) {
-						String mon = list.get(groupPosition).getWaterBookDetailList().get(i).getDwdh();
+						String mon = list.get(groupPosition).getWaterBookDetailList().get(i).getDwlxrdh();
 						if (checkedChildrenString.contains(mon)) {
 							count[groupPosition] = count[groupPosition] - 1;
 						}
@@ -239,7 +239,7 @@ public class PhoneAdapter extends BaseExpandableListAdapter {
 					if (checkedChildrenString.contains(childrenId)) {
 						checkedChildren.remove(list.get(groupPosition).getWaterBookDetailList().get(childPosition));
 						checkedChildrenString
-								.remove(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwdh());
+								.remove(list.get(groupPosition).getWaterBookDetailList().get(childPosition).getDwlxrdh());
 						PhoneListActivity.getmList(1, list.get(groupPosition).getWaterBookDetailList().get(childPosition));
 					}
 					groupCheckBox.get(groupPosition).put(G_CB, isChecked);

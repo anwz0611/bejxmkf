@@ -68,7 +68,7 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
     @Bind(R.id.irc)
     IRecyclerView irc;
     @Bind(R.id.spread_line_chart)
-    public CombinedChart lineChart;
+    public LineChart lineChart;
     @Bind(R.id.ntb)
     NormalTitleBar ntb;
     @Bind(R.id.tongji)
@@ -153,7 +153,7 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
         startTime = TM + " 00:00:00";
         endTime = TM + " 23:59:59";
 
-        starttime.setText( TM + " 00:00");
+        starttime.setText(TM + " 00:00");
         endtime.setText(TM + " 23:59");
         Intent intent = new Intent(mContext, WSDActivity.class);
 //        Stcd=intent.getString(AppConstant.NEWS_ID);
@@ -179,21 +179,17 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Calendar c = Calendar.getInstance();
-
-
-
-
-                switch (i){
+                switch (i) {
                     case 0:
                         break;
                     case 1:
                         c.setTime(new Date());
-                        c.add(Calendar.DATE, - 7);
+                        c.add(Calendar.DATE, -7);
                         Date d = c.getTime();
                         String day = format.format(d);
-                        starttime.setText(day.substring(0,16));
-                        endtime.setText(format.format(new Date()).toString().substring(0,16));
-                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp,day+":00",format.format(new Date())+":00");
+                        starttime.setText(day.substring(0, 16));
+                        endtime.setText(format.format(new Date()).toString().substring(0, 16));
+                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp, day + ":00", format.format(new Date()) + ":00");
 
                         break;
                     case 2:
@@ -201,31 +197,30 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
                         c.add(Calendar.MONTH, -1);
                         Date m = c.getTime();
                         String mon = format.format(m);
-                        starttime.setText(mon.substring(0,16));
-                        endtime.setText(format.format(new Date()).toString().substring(0,16));
-                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp,mon+":00",format.format(new Date())+":00");
+                        starttime.setText(mon.substring(0, 16));
+                        endtime.setText(format.format(new Date()).toString().substring(0, 16));
+                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp, mon + ":00", format.format(new Date()) + ":00");
                         break;
                     case 3:
                         c.setTime(new Date());
                         c.add(Calendar.MONTH, -3);
                         Date m3 = c.getTime();
                         String mon3 = format.format(m3);
-                        starttime.setText(mon3.substring(0,16));
-                        endtime.setText(format.format(new Date()).toString().substring(0,16));
-                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp,mon3+":00",format.format(new Date())+":00");
+                        starttime.setText(mon3.substring(0, 16));
+                        endtime.setText(format.format(new Date()).toString().substring(0, 16));
+                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp, mon3 + ":00", format.format(new Date()) + ":00");
                         break;
                     case 4:
                         c.setTime(new Date());
                         c.add(Calendar.MONTH, -6);
                         Date m6 = c.getTime();
                         String mon6 = format.format(m6);
-                        starttime.setText(mon6.substring(0,16));
-                        endtime.setText(format.format(new Date()).toString().substring(0,16));
-                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp,mon6+":00",format.format(new Date())+":00");
+                        starttime.setText(mon6.substring(0, 16));
+                        endtime.setText(format.format(new Date()).toString().substring(0, 16));
+                        mPresenter.getWaterSituationDetailDataRequest(stcd, sttp, mon6 + ":00", format.format(new Date()) + ":00");
                         break;
 
                 }
-
 
 
             }
@@ -279,10 +274,10 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
     public void returnWaterSituationDetailData(List<waterSituation> waterSituationDetails) {
         datas.clear();
         datas.addAll(waterSituationDetails);
-        if (waterSituationDetails.size()>0){
+        if (waterSituationDetails.size() > 0) {
             ntb.setTitleText(datas.get(0).getStName());
 
-        }else {
+        } else {
             Toast.makeText(mContext, "这段时间没有数据！", Toast.LENGTH_LONG).show();
         }
 
@@ -315,13 +310,14 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
                 entries.add((float) (stage));
                 entries1.add((float) (flow));
             }
-            MPChartHelper.setCombineChart(lineChart, xValsValue, entries1, entries, "流量", "水位");
+//            MPChartHelper.setCombineChart(lineChart, xValsValue, entries1, entries, "流量", "水位");
+            MPChartHelper.setTwolineChart(lineChart, xValsValue, entries1, entries, "流量", "水位");
             Float maxStage = Collections.max(entries);
             Float yMax = Double.valueOf(Collections.max(entries1)).floatValue();
             tongji.setText("统计数据：" + newList.size() + "条");
             max_flow.setText(yMax + "");
             max_stage.setText(maxStage.toString());
-            lineChart.setVisibleXRangeMaximum(10);
+            lineChart.setVisibleXRangeMaximum(15);
             lineChart.notifyDataSetChanged();
             lineChart.invalidate();
         }
@@ -363,12 +359,11 @@ public class WSDActivity extends BaseActivity<WaterSituationDetailPresenter, Wat
                 break;
 
             case R.id.chaxun:
-             if (starttime.getText().toString().compareTo(endtime.getText().toString())>0){
-                 Toast.makeText(mContext, "开始时间不能大于结束时间！", Toast.LENGTH_LONG).show();
-             }
-            else {
-                 mPresenter.getWaterSituationDetailDataRequest(stcd, sttp,starttime.getText()+":00",endtime.getText()+":00");
-             }
+                if (starttime.getText().toString().compareTo(endtime.getText().toString()) > 0) {
+                    Toast.makeText(mContext, "开始时间不能大于结束时间！", Toast.LENGTH_LONG).show();
+                } else {
+                    mPresenter.getWaterSituationDetailDataRequest(stcd, sttp, starttime.getText() + ":00", endtime.getText() + ":00");
+                }
 
                 break;
         }

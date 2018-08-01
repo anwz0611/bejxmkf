@@ -138,6 +138,7 @@
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\oneKeyShareSDK\libs\ShareSDK-Core-2.7.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\oneKeyShareSDK\libs\ShareSDK-QQ-2.7.2.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.clans:fab-1.6.4" level="project" />
+    <orderEntry type="library" name="com.amap.api:3dmap:6.3.1@jar" level="project" />
     <orderEntry type="library" name="com.yuyh.easyadapter:library-1.0.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-25.4.0" level="project" />
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\oneKeyShareSDK\libs\ShareSDK-QZone-2.7.2.jar:unspecified@jar" level="project" />
@@ -161,7 +162,6 @@
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\app\libs\ksoap2-android-assembly-3.0.0-jar-with-dependencies.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.umeng.analytics:analytics:6.1.4@jar" level="project" />
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\oneKeyShareSDK\libs\ShareSDK-Wechat-2.7.2.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" name="com.amap.api:3dmap:6.3.0@jar" level="project" />
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\oneKeyShareSDK\libs\MobTools-2016.0426.1819.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="__local_aars__:G.\login\bejxm\library\common\libs\libammsdk.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="com.github.PhilJay:MPAndroidChart:v3.0.2@jar" level="project" />

@@ -18,16 +18,18 @@ import android.widget.Toast;
 
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.api.ApiConstants;
+import com.jaydenxiao.androidfire.bean.SendMessageBeans;
 import com.jaydenxiao.androidfire.bean.SendSmsBean;
 import com.jaydenxiao.androidfire.bean.SortModel;
 import com.jaydenxiao.androidfire.bean.addressBookInfoBeans;
 import com.jaydenxiao.androidfire.entity.ShapeLoadingDialog;
 import com.jaydenxiao.androidfire.ui.more.adapter.ShowPhoneNumAdapter;
+import com.jaydenxiao.androidfire.ui.more.contract.SendMessageContract;
+import com.jaydenxiao.androidfire.ui.more.model.SendMessageModel;
+import com.jaydenxiao.androidfire.ui.more.presenter.SendMessagePresenter;
 import com.jaydenxiao.androidfire.utils.GsonUtils;
 import com.jaydenxiao.androidfire.utils.WebServiceUtils;
 import com.jaydenxiao.common.base.BaseActivity;
-
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -46,7 +48,7 @@ import butterknife.OnClick;
  *
  */
 
-public class EditoeSmsActivity extends AppCompatActivity {
+public class EditoeSmsActivity  extends BaseActivity<SendMessagePresenter, SendMessageModel> implements SendMessageContract.View{
 	/**
 	 * 头部处理
 	 */
@@ -83,18 +85,32 @@ public class EditoeSmsActivity extends AppCompatActivity {
 	private Context context;
 	private List<SortModel> listS=new ArrayList<SortModel>();
 
+//
+//	@Override
+//	protected void onCreate(Bundle savedInstanceState) {
+//		super.onCreate(savedInstanceState);
+//		setContentView(R.layout.activity_editoe_sms);
+//		ButterKnife.bind(this);
+//		context = this;
+//
+//
+//	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_editoe_sms);
-		ButterKnife.bind(this);
-		context = this;
-
-		initData();
+	public int getLayoutId() {
+		return R.layout.activity_editoe_sms;
 	}
 
+	@Override
+	public void initPresenter() {
+		mPresenter.setVM(this, mModel);
+	}
 
+	@Override
+	public void initView() {
+		context=mContext;
+		initData();
+	}
 
 
 	/*
@@ -162,17 +178,19 @@ public class EditoeSmsActivity extends AppCompatActivity {
 			String contextString = send_editText.getText().toString().intern();
 			if (!contextString.isEmpty() && !contextString.equals("")) {
 				// if (list.size() != 0) {
-				try {
-					dialog.loading("正在发送！");
-					SendSms(contextString);
-					send_editText.setText("");
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				// } else {
-				// Toast.makeText(context, "你还没有选择发送人员！", 0).show();
-				// }
+				SendSms1(contextString);
+//				try {
+////					dialog.loading("正在发送！");
+////					SendSms(contextString);
+//
+//					send_editText.setText("");
+//				} catch (UnsupportedEncodingException e) {
+//
+//					e.printStackTrace();
+//				}
+//				// } else {
+//				// Toast.makeText(context, "你还没有选择发送人员！", 0).show();
+//				// }
 			} else {
 				Toast.makeText(context, "你还没有编辑发送内容！", 0).show();
 			}
@@ -180,6 +198,25 @@ public class EditoeSmsActivity extends AppCompatActivity {
 		default:
 			break;
 		}
+	}
+
+	private void SendSms1(String contextString) {
+		// 隐藏软键盘
+		((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+				EditoeSmsActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+		String phoneNums = "";
+		if (list.size()>1){
+		for(int i = 0; i < list.size(); i++)
+		{
+			phoneNums+=list.get(i).getDwlxrdh()+",";
+
+		}
+		}else {
+			phoneNums=list.get(0).getDwlxrdh();
+		}
+		String content=URLDecoder.decode(contextString.toString());
+		mPresenter.SendMessageRequest(phoneNums,content);
+
 	}
 
 	/*
@@ -268,5 +305,30 @@ public class EditoeSmsActivity extends AppCompatActivity {
 			erroeSms = eror.get(i).getPhoneNum() + ",";
 		}
 		Toast.makeText(EditoeSmsActivity.this, erroeSms + "没有发送成功！", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void showLoading(String title) {
+		dialog.loading("正在发送！");
+	}
+
+	@Override
+	public void stopLoading() {
+		dialog.dismiss();
+	}
+
+	@Override
+	public void showErrorTip(String msg) {
+
+	}
+
+	@Override
+	public void returnSendMessage(SendMessageBeans sendMessageBeans) {
+	if (sendMessageBeans.isSMSstate()){
+		Toast.makeText(EditoeSmsActivity.this, "发送成功！", Toast.LENGTH_SHORT).show();
+		finish();
+	}else {
+		Toast.makeText(EditoeSmsActivity.this, "发送失败！", Toast.LENGTH_SHORT).show();
+	}
 	}
 }

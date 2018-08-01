@@ -44,7 +44,6 @@ import java.util.List;
 
 
 /**
- *
  * 整体设计采用了两个线程,一个线程用于计算组织聚合数据,一个线程负责处理Marker相关操作
  */
 public class ClusterOverlay implements AMap.OnCameraChangeListener,
@@ -66,7 +65,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private float mPXInMeters;
     private boolean mIsCanceled = false;
     List<waterSituation> list1 = new ArrayList<waterSituation>();
-    int isFrist=0;
+    int isFrist = 0;
+
     public ClusterOverlay() {
 
 
@@ -183,7 +183,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
     @Override
     public void onCameraChange(CameraPosition arg0) {
-        Log.e("CameraPosition", "CameraPosition= "+arg0);
+        Log.e("CameraPosition", "CameraPosition= " + arg0);
 
     }
 
@@ -261,7 +261,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         for (Cluster cluster : clusters) {
             if (clusters.size() == 1) {
                 addSingleClusterToMap(cluster);
-
             } else {
                 addSingleClusterToMap(cluster);
             }
@@ -308,7 +307,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
         marker.setAnimation(mADDAnimation);
         marker.setObject(cluster);
-        startGrowAnimation(mAMap,marker);
+        startGrowAnimation(mAMap, marker);
         marker.startAnimation();
         cluster.setMarker(marker);
         mAddMarkers.add(marker);
@@ -333,18 +332,13 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     }
 
     private void calculateClusters() {
-
-
         mIsCanceled = false;
         mClusters.clear();
         LatLngBounds visibleBounds = mAMap.getProjection().getVisibleRegion().latLngBounds;
         for (ClusterItem clusterItem : mClusterItems) {
-
             if (mIsCanceled) {
-
                 return;
             }
-
             LatLng latlng = clusterItem.getPosition();
             int i = clusterItem.i();
 
@@ -357,10 +351,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
                     mClusters.add(cluster);
                     cluster.addClusterItem(clusterItem);
                 }
-
             }
         }
-
         //复制一份数据，规避同步
         List<Cluster> clusters = new ArrayList<Cluster>();
         clusters.addAll(mClusters);
@@ -379,8 +371,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void assignClusters() {
         mIsCanceled = true;
         mSignClusterHandler.removeMessages(SignClusterHandler.CALCULATE_CLUSTER);
-
-
         mSignClusterHandler.sendEmptyMessage(SignClusterHandler.CALCULATE_CLUSTER);
     }
 
@@ -402,14 +392,11 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
             cluster.addClusterItem(clusterItem);
             Message message = Message.obtain();
             message.what = MarkerHandler.UPDATE_SINGLE_CLUSTER;
-
             message.obj = cluster;
             mMarkerhandler.removeMessages(MarkerHandler.UPDATE_SINGLE_CLUSTER);
             mMarkerhandler.sendMessageDelayed(message, 5);
 
-
         } else {
-
             cluster = new Cluster(latlng, i);
             mClusters.add(cluster);
             cluster.addClusterItem(clusterItem);
@@ -417,10 +404,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
             message.what = MarkerHandler.ADD_SINGLE_CLUSTER;
             message.obj = cluster;
             mMarkerhandler.sendMessage(message);
-
         }
     }
-
     /**
      * 根据一个点获取是否可以依附的聚合点，没有则返回null
      *
@@ -431,15 +416,12 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         for (Cluster cluster : clusters) {
             LatLng clusterCenterPoint = cluster.getCenterLatLng();
             double distance = AMapUtils.calculateLineDistance(latLng, clusterCenterPoint);
-            if (distance*2 < mClusterDistance && mAMap.getCameraPosition().zoom < 13) {
+            if (distance * 2 < mClusterDistance && mAMap.getCameraPosition().zoom < 13) {
                 return cluster;
             }
         }
-
         return null;
     }
-
-
     /**
      * 获取每个聚合点的绘制样式
      */
@@ -456,7 +438,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 //                bitmapBean.setBitmapDescriptor(bitmapDescriptor);
 //                return bitmapBean;
 //            }
-
             if (num > 1) {
                 String tile = String.valueOf(num);
                 textView.setText(tile);
@@ -478,18 +459,13 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         bitmapBean.setBitmapDescriptor(bitmapDescriptor);
         return bitmapBean;
     }
-
     /**
      * 更新已加入地图聚合点的样式
      */
     private void updateCluster(Cluster cluster) {
-
         Marker marker = cluster.getMarker();
         marker.setIcon(getBitmapDes(cluster.getClusterCount()).getBitmapDescriptor());
-
-
     }
-
     @Override
     public View getInfoWindow(Marker marker) {
         View infoWindow = null;
@@ -501,8 +477,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     public View getInfoContents(Marker marker) {
         return null;
     }
-
-
 //-----------------------辅助内部类用---------------------------------------------
 
     /**
@@ -548,13 +522,15 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
             switch (message.what) {
                 case ADD_CLUSTER_LIST:
-                    if (mAMap.getCameraPosition().zoom >= 13){
-
+                    if (mAMap.getCameraPosition().zoom >= 13) {
                         isFrist++;
-                        Log.e("isFrist", "isFrist=" +isFrist);
+                        Log.e("isFrist", "isFrist=" + isFrist);
+                    } else {
+                        if (isFrist>0)
+                        isFrist--;
                     }
-                    if (isFrist>=2){
-                        isFrist=0;
+                    if (isFrist >= 2) {
+                        isFrist = 0;
                         break;
                     }
                     List<Cluster> clusters = (List<Cluster>) message.obj;
@@ -587,7 +563,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         public void handleMessage(Message message) {
             switch (message.what) {
                 case CALCULATE_CLUSTER:
-                    Log.e("sssssssssssssssssss", mAMap.getCameraPosition().zoom+"");
+                    Log.e("sssssssssssssssssss", mAMap.getCameraPosition().zoom + "");
                     calculateClusters();
                     break;
                 case CALCULATE_SINGLE_CLUSTER:
@@ -608,7 +584,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         view.setDrawingCacheEnabled(true);
         return view.getDrawingCache(true);
     }
-
     private View showQDStation(final Marker marker) {
         final View infoWindow;
         infoWindow = View.inflate(mContext, R.layout.cz_hedao_info_window, null);
@@ -631,7 +606,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         TextView wptn = (TextView) infoWindow.findViewById(R.id.wptn);
         TextView lasttime = (TextView) infoWindow.findViewById(R.id.lasttime);
         TextView more = (TextView) infoWindow.findViewById(R.id.more);
-        stnm.setText(station.getStName().trim()+"("+station.getStcd().trim()+")");
+        stnm.setText(station.getStName().trim() + "(" + station.getStcd().trim() + ")");
         stcd.setText(station.getStcd().trim());
         sttp.setText("渠道站");
         stlc.setText(station.getSttp().trim());

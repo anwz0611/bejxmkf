@@ -19,6 +19,7 @@ import com.flyco.dialog.widget.NormalListDialog;
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.app.AppConstant;
 import com.jaydenxiao.androidfire.bean.PatrolDataBeans;
+import com.jaydenxiao.androidfire.bean.PatrolUploadingBeans;
 import com.jaydenxiao.androidfire.entity.ShapeLoadingDialog;
 import com.jaydenxiao.androidfire.ui.bases.contract.AssociationInfoContract;
 import com.jaydenxiao.androidfire.ui.more.activity.FristTextDetails;
@@ -519,6 +520,7 @@ public class CirclePublishActivity extends BaseActivity<PatrolDataPresenter, Pat
     public void stopLoading() {
         loadedTip.setLoadingTip(LoadingTip.LoadStatus.finish);
         dialog.dismiss();
+
     }
 
     @Override
@@ -548,9 +550,9 @@ public class CirclePublishActivity extends BaseActivity<PatrolDataPresenter, Pat
     }
 
     @Override
-    public void returnPatrolUploading(Result<String> Result) {
-        Result.response().toString();
-        if (Result.equals("true")) {
+    public void returnPatrolUploading(PatrolUploadingBeans Result) {
+
+        if (Result.isUploadingstate()) {
             Toast.makeText(mContext, "上传 成功！", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(mContext, "上传 失败！", Toast.LENGTH_LONG).show();

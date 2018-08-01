@@ -2,6 +2,7 @@ package com.jaydenxiao.androidfire.ui.zone.contract;
 
 
 import com.jaydenxiao.androidfire.bean.PatrolDataBeans;
+import com.jaydenxiao.androidfire.bean.PatrolUploadingBeans;
 import com.jaydenxiao.common.base.BaseModel;
 import com.jaydenxiao.common.base.BasePresenter;
 import com.jaydenxiao.common.base.BaseView;
@@ -25,7 +26,7 @@ public interface PatrolDataContract {
 
         Observable<PatrolDataBeans> getPatrolData();
 
-        Observable<Result<String>> patrolUploading(RequestBody can, RequestBody cantype, RequestBody id, RequestBody classification, RequestBody grade
+        Observable<PatrolUploadingBeans> patrolUploading(RequestBody can, RequestBody cantype, RequestBody id, RequestBody classification, RequestBody grade
                 , RequestBody tm, RequestBody part, RequestBody description, RequestBody mgr, RequestBody tel, RequestBody annex, RequestBody lgtd, RequestBody lttd, List<MultipartBody.Part> photo);
     }
 
@@ -33,7 +34,7 @@ public interface PatrolDataContract {
 
         void returnPatrolData(PatrolDataBeans patrolDataBeans);
 
-        void returnPatrolUploading(Result<String> Result);
+        void returnPatrolUploading(PatrolUploadingBeans Result);
 
     }
 

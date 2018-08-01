@@ -1,5 +1,7 @@
 package com.jaydenxiao.androidfire.bean;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2018/5/2.
  */
 
-public class addressBookInfoBeans implements Serializable {
+public class addressBookInfoBeans  implements Serializable{
 
 
     /**
@@ -22,7 +24,7 @@ public class addressBookInfoBeans implements Serializable {
      * remarks : null
      * waterBookDetailList : [{"dwmc":"c单位","dwfl":"23","office":"1","dwdh":"","dwfax":"","dwlxr":"","dwlxrdh":"","dwlxrzd":"","remarks":"","waterBookDetailList":null}]
      */
-
+    private static final long serialVersionUID = 1L;
     private String dwmc;
     private Object dwfl;
     private Object office;
@@ -114,7 +116,7 @@ public class addressBookInfoBeans implements Serializable {
         this.waterBookDetailList = waterBookDetailList;
     }
 
-    public static class WaterBookDetailListBean implements Serializable {
+    public static class WaterBookDetailListBean  implements Serializable {
         /**
          * dwmc : c单位
          * dwfl : 23
@@ -137,10 +139,20 @@ public class addressBookInfoBeans implements Serializable {
         private String dwlxrdh;
         private String dwlxrzd;
         private String remarks;
+        @Expose
+        private String sortLetters;
         private Object waterBookDetailList;
 
         public String getDwmc() {
             return dwmc;
+        }
+
+        public String getSortLetters() {
+            return sortLetters;
+        }
+
+        public void setSortLetters(String sortLetters) {
+            this.sortLetters = sortLetters;
         }
 
         public void setDwmc(String dwmc) {

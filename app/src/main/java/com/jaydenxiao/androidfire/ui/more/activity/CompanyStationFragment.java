@@ -128,10 +128,10 @@ public class CompanyStationFragment extends Activity {
 					}
 					myContactName.add(displayNameString);
 					myContactNumber.add(phoneString);
-					PhoneItemInfo sortModel = new PhoneItemInfo();
-					sortModel.setName(displayNameString);
-					sortModel.setMobile(phoneString);
-//					lists.add(sortModel);
+					addressBookInfoBeans.WaterBookDetailListBean sortModel = new addressBookInfoBeans.WaterBookDetailListBean();
+					sortModel.setDwlxr(displayNameString);
+					sortModel.setDwlxrdh(phoneString);
+					lists.add(sortModel);
 				}
 			}
 		} catch (Exception e) {
@@ -140,7 +140,7 @@ public class CompanyStationFragment extends Activity {
 				phones.close();
 		}
 
-//		SourceDateList = filledData(lists);
+		SourceDateList = filledData(lists);
 		// 根据a-z进行排序源数据
 
 		Collections.sort(SourceDateList, pinyinComparator);
@@ -212,14 +212,14 @@ public class CompanyStationFragment extends Activity {
 	 * ListView
 	 *
 	 */
-	private List<PhoneItemInfo> filledData(List<PhoneItemInfo> list) {
-		List<PhoneItemInfo> mSortList = new ArrayList<PhoneItemInfo>();
+	private List<addressBookInfoBeans.WaterBookDetailListBean> filledData(List<addressBookInfoBeans.WaterBookDetailListBean> list) {
+		List<addressBookInfoBeans.WaterBookDetailListBean> mSortList = new ArrayList<addressBookInfoBeans.WaterBookDetailListBean>();
 		for (int i = 0; i < list.size(); i++) {
-			PhoneItemInfo sortModel = new PhoneItemInfo();
-			sortModel.setName(list.get(i).getName().toString());
-			sortModel.setMobile(list.get(i).getMobile().toString());
+			addressBookInfoBeans.WaterBookDetailListBean sortModel = new addressBookInfoBeans.WaterBookDetailListBean();
+			sortModel.setDwlxr(list.get(i).getDwlxr().toString());
+			sortModel.setDwlxrdh(list.get(i).getDwlxrdh().toString());
 			// 汉字转换成拼音
-			String pinyin = characterParser.getSelling(list.get(i).getName());
+			String pinyin = characterParser.getSelling(list.get(i).getDwlxr());
 			String sortString = pinyin.substring(0, 1).toUpperCase();
 			// 正则表达式，判断首字母是否是英文字母
 			if (sortString.matches("[A-Z]")) {

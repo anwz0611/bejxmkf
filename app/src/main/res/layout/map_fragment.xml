@@ -26,15 +26,15 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="0dp"
-                android:layout_weight="3"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="2dp"
+                android:layout_weight="3"
                 app:tabBackground="@color/main_color"
 
                 app:tabIndicatorColor="@color/white"
@@ -48,7 +48,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -168,6 +168,19 @@
                     app:fab_size="mini" />
 
             </com.github.clans.fab.FloatingActionMenu>
+
+            <TextView
+                android:id="@+id/map_taime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:gravity="center"
+
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:background="@null"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/red"/>
 
             <include layout="@layout/map_yh" />
 

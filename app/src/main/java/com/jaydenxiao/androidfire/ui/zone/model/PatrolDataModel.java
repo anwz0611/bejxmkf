@@ -5,6 +5,7 @@ import com.jaydenxiao.androidfire.api.HostType;
 
 import com.jaydenxiao.androidfire.bean.PatrolDataBeans;
 
+import com.jaydenxiao.androidfire.bean.PatrolUploadingBeans;
 import com.jaydenxiao.androidfire.ui.zone.contract.PatrolDataContract;
 import com.jaydenxiao.common.baserx.RxSchedulers;
 
@@ -31,9 +32,9 @@ public class PatrolDataModel implements PatrolDataContract.Model {
     }
 
     @Override
-    public Observable<Result<String>> patrolUploading(RequestBody can, RequestBody cantype, RequestBody id, RequestBody classification, RequestBody grade, RequestBody tm, RequestBody part, RequestBody description, RequestBody mgr, RequestBody tel, RequestBody annex, RequestBody lgtd, RequestBody lttd, List<MultipartBody.Part> photo) {
+    public Observable<PatrolUploadingBeans> patrolUploading(RequestBody can, RequestBody cantype, RequestBody id, RequestBody classification, RequestBody grade, RequestBody tm, RequestBody part, RequestBody description, RequestBody mgr, RequestBody tel, RequestBody annex, RequestBody lgtd, RequestBody lttd, List<MultipartBody.Part> photo) {
         return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).patrolUploading(can, cantype, id, classification, grade, tm, part, description, mgr, tel, annex, lgtd, lttd, photo)
-                .compose(RxSchedulers.<Result<String>>io_main());
+                .compose(RxSchedulers.<PatrolUploadingBeans>io_main());
     }
 
 

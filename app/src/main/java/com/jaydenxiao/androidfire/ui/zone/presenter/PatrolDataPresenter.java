@@ -4,6 +4,7 @@ import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.app.AppConstant;
 import com.jaydenxiao.androidfire.bean.AssociationInfoBeans;
 import com.jaydenxiao.androidfire.bean.PatrolDataBeans;
+import com.jaydenxiao.androidfire.bean.PatrolUploadingBeans;
 import com.jaydenxiao.androidfire.ui.bases.contract.AssociationInfoContract;
 import com.jaydenxiao.androidfire.ui.zone.contract.PatrolDataContract;
 import com.jaydenxiao.common.baserx.RxSubscriber;
@@ -42,10 +43,10 @@ public class PatrolDataPresenter extends PatrolDataContract.Presenter {
 
     @Override
     public void getPatrolUploadingRequest(RequestBody can, RequestBody cantype, RequestBody id, RequestBody classification, RequestBody grade, RequestBody tm, RequestBody part, RequestBody description, RequestBody mgr, RequestBody tel, RequestBody annex,RequestBody lgtd, RequestBody lttd,  List<MultipartBody.Part> photo) {
-        mRxManage.add(mModel.patrolUploading(can,cantype,id,classification,grade,tm,part,description,mgr,tel,annex, lgtd,  lttd, photo).subscribe(new RxSubscriber<Result<String>>(mContext, false){
+        mRxManage.add(mModel.patrolUploading(can,cantype,id,classification,grade,tm,part,description,mgr,tel,annex, lgtd,  lttd, photo).subscribe(new RxSubscriber<PatrolUploadingBeans>(mContext, false){
 
             @Override
-            protected void _onNext(Result<String> stringResult) {
+            protected void _onNext(PatrolUploadingBeans stringResult) {
                 mView.returnPatrolUploading(stringResult);
                 mView.stopLoading();
 
@@ -59,7 +60,8 @@ public class PatrolDataPresenter extends PatrolDataContract.Presenter {
 
             @Override
             protected void _onError(String message) {
-                mView.showLoading(mContext.getString(R.string.loading));
+                mView.stopLoading();
+                mView.showErrorTip("上传失败");
             }
         }));
     }

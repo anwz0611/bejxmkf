@@ -105,14 +105,14 @@ public class MainActivity extends BaseActivity {
         initFragment(savedInstanceState);
         tabLayout.measure(0,0);
         tabLayoutHeight=tabLayout.getMeasuredHeight();
-        //监听菜单显示或隐藏
-        mRxManager.on(AppConstant.MENU_SHOW_HIDE, new Action1<Boolean>() {
-
-            @Override
-            public void call(Boolean hideOrShow) {
-                startAnimation(hideOrShow);
-            }
-        });
+//        //监听菜单显示或隐藏
+//        mRxManager.on(AppConstant.MENU_SHOW_HIDE, new Action1<Boolean>() {
+//
+//            @Override
+//            public void call(Boolean hideOrShow) {
+//                startAnimation(hideOrShow);
+//            }
+//        });
     }
     /**
      * 初始化tab
