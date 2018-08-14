@@ -32,21 +32,17 @@ public class ApiConstants {
 
 
 
-    // 新闻详情
+    //
     public static final String NEWS_DETAIL = NETEAST_HOST + "nc/article/";
 
-    // 头条TYPE
+    //
     public static final String HEADLINE_TYPE = "headline";
-    // 房产TYPE
+    //
     public static final String HOUSE_TYPE = "house";
-    // 其他TYPE
+    //
     public static final String OTHER_TYPE = "list";
 
-    //    // 北京
-    //    public static final String LOCAL_TYPE = "local";
-    //    // 北京的Id
-    //    public static final String BEIJING_ID = "5YyX5Lqs";
-    //example：http://c.m.163.com/nc/article/headline/T1348647909107/0-20.html
+
     // id
     public static final String HEADLINE_ID = "T1348647909107";
     // id
@@ -71,17 +67,17 @@ public class ApiConstants {
 
     /**
      *
-     * http://gank.io/api/data/福利/{size}/{page}
+     *
      */
     public static final String SINA_PHOTO_HOST = "http://gank.io/api/";
 
-    // 精选列表
+    //
     public static final String SINA_PHOTO_CHOICE_ID = "hdpic_toutiao";
-    // 趣图列表
+    //
     public static final String SINA_PHOTO_FUN_ID = "hdpic_funny";
-    // 美图列表
+    //
     public static final String SINA_PHOTO_PRETTY_ID = "hdpic_pretty";
-    // 故事列表
+    //
     public static final String SINA_PHOTO_STORY_ID = "hdpic_story";
 
     // 图片详情

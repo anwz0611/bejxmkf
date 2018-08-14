@@ -52,11 +52,12 @@ public class LineChartMarkView extends MarkerView {
                 LineDataSet dataSet = (LineDataSet) dataSetList.get(i);
                 //获取到曲线的所有在Y轴的数据集合，根据当前X轴的位置 来获取对应的Y轴值
                 float y = dataSet.getValues().get((int) e.getX()).getY();
+
                 if (i == 0) {
-                    tvValue0.setText(dataSet.getLabel() + "：" + df.format(y ) + "m³/s");
+                    tvValue0.setText(dataSet.getLabel() + "：" + df.format(y )+"m³/s");
                 }
                 if (i == 1) {
-                    tvValue1.setText(dataSet.getLabel() + "：" + df.format(y ) + "米");
+                    tvValue1.setText(dataSet.getLabel() + "：" + df.format(y )+"米");
                 }
             }
             tvDate.setText(xAxisValueFormatter.getFormattedValue(e.getX(), null));

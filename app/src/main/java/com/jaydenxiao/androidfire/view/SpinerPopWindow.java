@@ -19,8 +19,7 @@ import java.util.List;
 
 /**
 * Description:
-* @author:杨玉萍
-* @date:2016年8月22日下午2:33:00
+*
 */
 
 public class SpinerPopWindow extends PopupWindow implements OnItemClickListener{

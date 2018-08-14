@@ -11,9 +11,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.jaydenxiao.androidfire.R;
 
 /**
- * Created by JKWANG-PC on 2016/11/1.
  *
- * Since release v3.0.0, markers (popup views) in the chart are represented by the IMarker interface.
  */
 
 public class MPChartMarkerView extends MarkerView {

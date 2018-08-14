@@ -314,6 +314,8 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
 
                 PolylineOptions polylineOption = new PolylineOptions();
                 polylineOption.addAll(parseData(district.get(0)));
+                polylineOption.setDottedLine(true);
+                polylineOption.setDottedLineType(PolylineOptions.DOTTEDLINE_TYPE_SQUARE);
                 polylineOption.width(6).color(Color.BLUE);
                 aMap.addPolyline(polylineOption);
 
@@ -667,7 +669,7 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
     public void onDestroy() {
         super.onDestroy();
 
-        Log.e("onDestroy", "ShuizimaponDestroy");
+
     }
 
     @Override
@@ -694,8 +696,6 @@ public class MapFragment extends BaseFragment<MapPresenter, MapModel> implements
     @Override
     public void returnPatrolRecordData(List<patrolRecordBeans> patrolRecordBeans) {
         list.clear();
-
-
         list.addAll(patrolRecordBeans);
         addYHMakers(list);
     }

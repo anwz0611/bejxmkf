@@ -23,7 +23,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 
 
 /**
- * Created by zzz40500 on 15/4/6.
+ *
  */
 public class LoadingView extends FrameLayout {
 

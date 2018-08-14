@@ -1,5 +1,6 @@
 package com.jaydenxiao.androidfire.entity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,7 +36,7 @@ public class PhoneDialog implements OnClickListener {
     private Button cancel;
     private Button sure;
     private int selected=1;
-	
+
 
 
     public PhoneDialog(Context context) {
@@ -87,7 +88,7 @@ public class PhoneDialog implements OnClickListener {
     public void loading(CharSequence mobile, CharSequence officetel){
     	setLoadingText(mobile,officetel);
         show();
-        
+
     }
 
     public Dialog getDialog(){
@@ -97,7 +98,8 @@ public class PhoneDialog implements OnClickListener {
     public void setCanceledOnTouchOutside(boolean cancel){
         mDialog.setCanceledOnTouchOutside(cancel);
     }
-    
+
+   @SuppressLint("MissingPermission")
    @Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -128,9 +130,9 @@ public class PhoneDialog implements OnClickListener {
 				Toast.makeText(mContext, "办公室号码："+officetel.getText(), 0).show();
 				phoneNumber=officetel.getText().toString();
 			}
-			//用intent启动拨打电话  
+			//用intent启动拨打电话
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+phoneNumber));
-            mContext.startActivity(intent); 
+            mContext.startActivity(intent);
             mDialog.dismiss();
 			break;
 

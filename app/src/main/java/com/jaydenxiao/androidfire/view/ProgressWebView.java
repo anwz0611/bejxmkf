@@ -31,8 +31,7 @@ import java.util.List;
 
 /**
 * Description:
-* @author:杨玉萍
-* @date:2016年8月16日上午11:56:44
+*
 */
 public class ProgressWebView extends RelativeLayout implements OnClickListener{
 	

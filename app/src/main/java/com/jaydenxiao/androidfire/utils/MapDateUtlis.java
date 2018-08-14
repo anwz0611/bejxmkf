@@ -13,8 +13,7 @@ import java.util.List;
 
 /**
 * Description:
-* @author:杨玉萍
-* @date:2016年8月18日下午5:38:40
+*
 */
 public class MapDateUtlis {
 	private static int yuntuNum=20;
