@@ -2,8 +2,6 @@ package com.jaydenxiao.androidfire.bean;
 
 /**
  * des:视频
- * Created by xsf
- * on 2016.09.14:12
  */
 public class VideoData {
 

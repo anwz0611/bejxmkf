@@ -29,8 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * des:retorfit api
- * Created by xsf
- * on 2016.06.15:47
+ *
  */
 public class Api {
     //读超时长，单位：毫秒

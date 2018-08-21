@@ -3,7 +3,7 @@ package com.jaydenxiao.androidfire.ui.map.activity;
 import android.graphics.drawable.Drawable;
 
 /**
- * Created by yiyi.qi on 16/10/10.
+ *
  */
 
 public interface ClusterRender {

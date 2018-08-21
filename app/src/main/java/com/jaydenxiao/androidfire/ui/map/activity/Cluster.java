@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yiyi.qi on 16/10/10.
+ *
  */
 
 public class Cluster {

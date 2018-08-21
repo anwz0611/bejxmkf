@@ -19,9 +19,9 @@ package com.jaydenxiao.androidfire.bean;
 public class PhotoGirl {
     /**
      * _id : 57a4056c421aa91e2606478d
-     * createdAt : 2016-08-05T11:18:04.807Z
+     * createdAt :
      * desc : 8.5
-     * publishedAt : 2016-08-05T11:31:58.293Z
+     * publishedAt :
      * source : chrome
      * type : 福利
      * url : http://ww4.sinaimg.cn/large/610dc034jw1f6ipaai7wgj20dw0kugp4.jpg

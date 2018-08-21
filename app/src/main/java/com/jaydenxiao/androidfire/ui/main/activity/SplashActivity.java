@@ -25,8 +25,6 @@ import butterknife.Bind;
 
 /**
  * des:启动页
- * Created by xsf
- * on 2016.09.15:16
  */
 public class SplashActivity extends BaseActivity {
     @Bind(R.id.iv_logo)

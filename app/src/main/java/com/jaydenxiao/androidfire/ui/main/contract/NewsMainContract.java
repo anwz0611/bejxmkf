@@ -11,8 +11,6 @@ import rx.Observable;
 
 /**
  * des:
- * Created by xsf
- * on 2016.09.11:53
  */
 public interface NewsMainContract {
 

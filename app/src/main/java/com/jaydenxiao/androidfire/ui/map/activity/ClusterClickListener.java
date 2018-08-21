@@ -5,7 +5,7 @@ import com.amap.api.maps.model.Marker;
 import java.util.List;
 
 /**
- * Created by yiyi.qi on 16/10/10.
+ *
  */
 
 public interface ClusterClickListener {
