@@ -95,7 +95,7 @@ public class WaterChannelActivity extends BaseActivity<WaterChannelPresenter, Wa
                 } else
 
                 {
-                    helper.setText(R.id.textView5, "长度：" +"");
+                    helper.setText(R.id.textView5, "长度：" +"米");
                 }
 
 

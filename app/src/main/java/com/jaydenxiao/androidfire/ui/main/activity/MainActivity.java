@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.ViewGroup;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -45,6 +47,9 @@ import rx.functions.Action1;
 public class MainActivity extends BaseActivity {
     @Bind(R.id.tab_layout)
     CommonTabLayout tabLayout;
+
+    @Bind(R.id.my_toolbar)
+    Toolbar toolbar;
 
     private String[] mTitles = {"首页", "巡查","基础","更多"};
     private int[] mIconUnselectIds = {
@@ -87,6 +92,7 @@ public class MainActivity extends BaseActivity {
     }
     @Override
     public void initView() {
+        setSupportActionBar(toolbar);
         //此处填上在http://fir.im/注册账号后获得的API_TOKEN以及APP的应用ID
         UpdateKey.API_TOKEN = AppConfig.API_FIRE_TOKEN;
         UpdateKey.APP_ID = AppConfig.APP_FIRE_ID;
@@ -175,6 +181,7 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             //首页
             case 0:
+//                invalidateOptionsMenu();
                 transaction.hide(mapFragment);
 //                transaction.hide(videoMainFragment);
                 transaction.hide(jiChuTFragment);
@@ -195,6 +202,7 @@ public class MainActivity extends BaseActivity {
                 break;
             //基础
             case 2:
+//                invalidateOptionsMenu();
                 transaction.hide(newsMainFragment);
                 transaction.hide(mapFragment);
 //                transaction.hide(careMainFragment);
@@ -297,5 +305,13 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         ChangeModeController.onDestory();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -5,12 +5,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.app.AppConstant;
+import com.jaydenxiao.androidfire.bean.EventBusBeans;
 import com.jaydenxiao.androidfire.bean.NewsChannelTable;
 import com.jaydenxiao.androidfire.ui.news.activity.NewsChannelActivity;
 import com.jaydenxiao.androidfire.ui.main.contract.NewsMainContract;
@@ -21,6 +28,10 @@ import com.jaydenxiao.androidfire.ui.news.fragment.WaterSituationFrament;
 import com.jaydenxiao.androidfire.utils.MyUtils;
 import com.jaydenxiao.common.base.BaseFragment;
 import com.jaydenxiao.common.base.BaseFragmentAdapter;
+import com.wyt.searchbox.SearchFragment;
+import com.wyt.searchbox.custom.IOnSearchClickListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +41,22 @@ import butterknife.OnClick;
 
 /**
  * des:新闻首页首页
- *
- *
  */
-public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainModel>implements NewsMainContract.View {
+public class NewsMainFragment extends BaseFragment<NewsMainPresenter, NewsMainModel> implements NewsMainContract.View {
 
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.tabs)
     TabLayout tabs;
-    @Bind(R.id.add_channel_iv)
-    ImageView addChannelIv;
+//    @Bind(R.id.add_channel_iv)
+//    ImageView addChannelIv;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     private BaseFragmentAdapter fragmentAdapter;
+    private SearchFragment searchFragment;
 
     @Override
     protected int getLayoutResource() {
@@ -55,7 +65,7 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
 
     @Override
     public void initPresenter() {
-      mPresenter.setVM(this,mModel);
+        mPresenter.setVM(this, mModel);
     }
 
     @Override
@@ -67,31 +77,55 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
                 mRxManager.post(AppConstant.NEWS_LIST_TO_TOP, "");
             }
         });
+
+
     }
-    @OnClick(R.id.add_channel_iv)
-    public void clickAdd(){
-        NewsChannelActivity.startAction(getContext());
+
+//    @OnClick(R.id.add_channel_iv)
+//    public void clickAdd() {
+//        NewsChannelActivity.startAction(getContext());
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                searchFragment.show(getFragmentManager(), SearchFragment.TAG);
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        Log.e("onCreateOptionsMenu====", "NewsMainFragment" );
     }
 
     @Override
     public void returnMineNewsChannels(List<NewsChannelTable> newsChannelsMine) {
-        if(newsChannelsMine!=null) {
+        if (newsChannelsMine != null) {
             List<String> channelNames = new ArrayList<>();
             List<Fragment> mNewsFragmentList = new ArrayList<>();
             for (int i = 0; i < newsChannelsMine.size(); i++) {
                 channelNames.add(newsChannelsMine.get(i).getNewsChannelName());
                 mNewsFragmentList.add(createListFragments(newsChannelsMine.get(i)));
             }
-                if (newsChannelsMine!=null){
-                    List<String> channelNames1 = new ArrayList<>();
-                    List<Fragment> mNewsFragmentList1 = new ArrayList<>();
+            if (newsChannelsMine != null) {
+                List<String> channelNames1 = new ArrayList<>();
+                List<Fragment> mNewsFragmentList1 = new ArrayList<>();
 
-                }
-            if(fragmentAdapter==null) {
+            }
+            if (fragmentAdapter == null) {
                 fragmentAdapter = new BaseFragmentAdapter(getChildFragmentManager(), mNewsFragmentList, channelNames);
-            }else{
+            } else {
                 //刷新fragment
-                fragmentAdapter.setFragments(getChildFragmentManager(),mNewsFragmentList,channelNames);
+                fragmentAdapter.setFragments(getChildFragmentManager(), mNewsFragmentList, channelNames);
             }
             viewPager.setAdapter(fragmentAdapter);
             tabs.setupWithViewPager(viewPager);
@@ -107,11 +141,29 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
                  */
                 @Override
                 public void transformPage(View page, float position) {
-                    raised3D(page,position);//调用翻页效果
+                    raised3D(page, position);//调用翻页效果
                 }
             });
             MyUtils.dynamicSetTabLayoutMode(tabs);
             setPageChangeListener();
+
+            setHasOptionsMenu(true);
+            searchFragment = SearchFragment.newInstance();
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            toolbar.inflateMenu(R.menu.menu_main);
+            searchFragment.setOnSearchClickListener(new IOnSearchClickListener() {
+                @Override
+                public void OnSearchClick(String keyword) {
+                    //这里处理逻辑
+                    EventBusBeans eb=new  EventBusBeans();
+                    eb.setFlag(tabs.getSelectedTabPosition());
+                    eb.setData(keyword);
+                    EventBus.getDefault().post(eb);
+                }
+            });
+
+
+
         }
     }
 
@@ -157,22 +209,51 @@ public class NewsMainFragment extends BaseFragment<NewsMainPresenter,NewsMainMod
     public void showErrorTip(String msg) {
 
     }
+
     /**
      * 动画效果1  凹陷的3D效果
      */
-    public void sink3D(View view,float position){
-        if(position>=-1&&position<=1){
-            view.setPivotX(position<0?view.getWidth():0);
-            view.setRotationY(-90*position);
+    public void sink3D(View view, float position) {
+        if (position >= -1 && position <= 1) {
+            view.setPivotX(position < 0 ? view.getWidth() : 0);
+            view.setRotationY(-90 * position);
         }
     }
+
     /**
      * 动画效果2  凸起的3D效果
      */
-    public void raised3D(View view,float position){
-        if(position>=-1&&position<=1){
-            view.setPivotX(position<0?view.getWidth():0);//设置要旋转的Y轴的位置
-            view.setRotationY(90*position);//开始设置属性动画值
+    public void raised3D(View view, float position) {
+        if (position >= -1 && position <= 1) {
+            view.setPivotX(position < 0 ? view.getWidth() : 0);//设置要旋转的Y轴的位置
+            view.setRotationY(90 * position);//开始设置属性动画值
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("onPause=====", "onPause" );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("onResume=====", "onResume" );
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("onStart=====", "onStart" );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("onStop=====", "onStop" );
+
+
     }
 }

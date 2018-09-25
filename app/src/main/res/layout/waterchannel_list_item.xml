@@ -84,7 +84,7 @@
                    android:layout_height="wrap_content"
                    android:layout_centerVertical="true"
                    android:layout_toRightOf="@+id/textView2"
-                   android:text="2655464个"
+                   android:text=""
                    android:textColor="@color/gray_text2"  />
 
                <TextView
@@ -146,7 +146,7 @@
                    android:layout_height="wrap_content"
                    android:layout_centerVertical="true"
                    android:layout_toRightOf="@+id/textView7"
-                   android:text="73.98/km2"
+                   android:text=""
                    android:textColor="@color/gray_text2"  />
            </RelativeLayout>
        </LinearLayout>

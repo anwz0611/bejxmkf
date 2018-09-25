@@ -19,7 +19,7 @@ public interface WaterSituationContract {
 
     interface Model extends BaseModel {
         //请求历史河道水情列表
-        Observable<List<waterSituation>> getWaterSituationData(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn);
+        Observable<List<waterSituation>> getWaterSituationData(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn,String keyWord);
     }
     interface View extends BaseView {
         //返回获取的历史河道水情列表
@@ -34,7 +34,7 @@ public interface WaterSituationContract {
 
     abstract static class Presenter extends BasePresenter<WaterSituationContract.View, WaterSituationContract.Model> {
         //发起获取水情请求
-        public abstract void getWaterSituationDataRequest(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn);
+        public abstract void getWaterSituationDataRequest(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn,String keyWord);
 
     }
 }

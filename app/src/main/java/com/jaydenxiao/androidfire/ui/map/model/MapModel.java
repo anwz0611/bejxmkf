@@ -24,6 +24,9 @@ public class MapModel implements MapContract.Model {
         return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getPatrolRecord()
                 .compose(RxSchedulers.<List<patrolRecordBeans>>io_main());
     }
+
+
+
     @Override
     public Observable<List<waterSituation>> getWaterMapSituationDate(String date) {
         return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getWaterMapSituation(date)
@@ -31,8 +34,8 @@ public class MapModel implements MapContract.Model {
     }
 
     @Override
-    public Observable<List<waterSituation>> getWaterSituationData(String newDate, String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn) {
-        return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getWaterSituation(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType, wptn)
+    public Observable<List<waterSituation>> getWaterSituationData(String newDate, String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn,String keyWord) {
+        return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getWaterSituation(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType, wptn,keyWord)
                 .compose(RxSchedulers.<List<waterSituation>>io_main());
 
 

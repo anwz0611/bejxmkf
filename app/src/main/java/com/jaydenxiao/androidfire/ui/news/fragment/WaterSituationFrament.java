@@ -27,6 +27,7 @@ import com.aspsine.irecyclerview.universaladapter.recyclerview.CommonRecycleView
 import com.aspsine.irecyclerview.widget.LoadMoreFooterView;
 import com.jaydenxiao.androidfire.R;
 import com.jaydenxiao.androidfire.app.AppConstant;
+import com.jaydenxiao.androidfire.bean.EventBusBeans;
 import com.jaydenxiao.androidfire.bean.waterSituation;
 import com.jaydenxiao.androidfire.entity.ShapeLoadingDialog;
 import com.jaydenxiao.androidfire.ui.news.activity.WSDActivity;
@@ -42,6 +43,9 @@ import com.jaydenxiao.common.commonutils.LogUtils;
 import com.jaydenxiao.common.commonwidget.LoadingTip;
 import com.yyydjk.library.DropDownMenu;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +57,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * des:新闻fragment
+ * des:fragment
  * <p>
  * on
  */
@@ -82,7 +86,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
     private String citys[] = {"不限", "渠道1", "渠道2", "渠道3", "渠道4", "渠道5", "渠道6", "渠道7", "渠道8", "渠道9", "渠道10", "渠道11"};
     private String ages[] = {"不限", "水势涨", "水势落", "水势平"};
     //    private String sexs[] = {"不限", "男", "女"};
-    private String constellations[] = {"不限", "时间升序", "时间降序", "水位升序", "水位降序", "流量升序", "流量降序"};
+    private String constellations[] = {"不限", "时间升序", "时间降序", "站码升序", "站码降序"};
     private int constellationPosition = 0;
 
     private List<waterSituation> datas = new ArrayList<>();
@@ -99,6 +103,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
     private String sortType = "";
     private String wptn = "";
     boolean isPrepareds;
+    private String keyWord = "";
     String s = "";
     // 标志位，标志已经初始化完成。
     private boolean isPrepared;
@@ -127,7 +132,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                 flag = "1";
             }
         }
-
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         ThisTime = format.format(new Date());
@@ -186,9 +193,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
             isPrepareds = true;
             mStartPage = 1;
             if (flag.equals("0")) {
-                mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
             } else {
-                mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
             }
         }
     }
@@ -202,7 +209,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
         textView.setText("时间");
         if (flag.equals("0")) {
             textView.setVisibility(View.GONE);
-        }else {
+        } else {
             textView.setVisibility(View.VISIBLE);
         }
 
@@ -235,7 +242,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
             @Override
             public void onClick(View v) {
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[1] : constellations[constellationPosition]);
-                switch (constellationPosition == 0 ? headers[1] : constellations[constellationPosition]) {
+                switch (constellations[constellationPosition]) {
                     case "不限":
                         sortContent = "";
                         sortType = "";
@@ -248,22 +255,15 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                         sortContent = "tm";
                         sortType = "desc";
                         break;
-                    case "水位升序":
-                        sortContent = "z";
+                    case "站码升序":
+                        sortContent = "stcd";
                         sortType = "asc";
                         break;
-                    case "水位降序":
-                        sortContent = "z";
+                    case "站码降序":
+                        sortContent = "stcd";
                         sortType = "desc";
                         break;
-                    case "流量升序":
-                        sortContent = "q";
-                        sortType = "asc";
-                        break;
-                    case "流量降序":
-                        sortContent = "q";
-                        sortType = "desc";
-                        break;
+
 
                     default:
                         break;
@@ -273,9 +273,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                 irc.setRefreshing(true);
                 mStartPage = 1;
                 if (flag.equals("0")) {
-                    mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                    mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
                 } else {
-                    mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                    mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
                 }
             }
         });
@@ -307,7 +307,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                 ageAdapter.setCheckItem(position);
                 mDropDownMenu.setTabText(position == 0 ? headers[1] : ages[position]);
 
-                switch (position == 0 ? headers[1] : ages[position]) {
+                switch (ages[position]) {
                     case "不限":
                         wptn = "";
                         break;
@@ -330,9 +330,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                 irc.setRefreshing(true);
                 mStartPage = 1;
                 if (flag.equals("0")) {
-                    mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                    mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
                 } else {
-                    mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                    mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
                 }
             }
         });
@@ -384,7 +384,7 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
                             historyDate = time;
                             irc.setRefreshing(true);
                             mStartPage = 1;
-                            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+                            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
                         }
                     }
                 });
@@ -456,9 +456,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
         //发起请求
         irc.setRefreshing(true);
         if (flag.equals("0")) {
-            mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+            mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
         } else {
-            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
         }
     }
 
@@ -468,9 +468,9 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
         //发起请求0000
         irc.setLoadMoreStatus(LoadMoreFooterView.Status.LOADING);
         if (flag.equals("0")) {
-            mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+            mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
         } else {
-            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn);
+            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, keyWord);
         }
     }
 
@@ -505,5 +505,19 @@ public class WaterSituationFrament extends BaseFragment<WaterSituationPresenter,
         }
     }
 
+    @Subscribe
+    public void onEvent(EventBusBeans eb) {
+        WSListAdapter.getPageBean().setRefresh(true);
+        mStartPage = 1;
+        //发起请求
+
+        if (eb.getFlag() == 0) {
+
+            mPresenter.getWaterSituationDataRequest(ThisTime, "", flag, mStartPage + "", pageNum, sortContent, sortType, wptn, eb.getData());
+
+        } else {
+            mPresenter.getWaterSituationDataRequest("", historyDate, flag, mStartPage + "", pageNum, sortContent, sortType, wptn, eb.getData());
+        }
+    }
 
 }

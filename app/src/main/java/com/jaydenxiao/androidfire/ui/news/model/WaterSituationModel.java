@@ -16,8 +16,8 @@ import rx.Observable;
 
 public class WaterSituationModel implements WaterSituationContract.Model {
     @Override
-    public Observable<List<waterSituation>> getWaterSituationData(String newDate,String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType,String wptn) {
-        return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getWaterSituation(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType, wptn)
+    public Observable<List<waterSituation>> getWaterSituationData(String newDate,String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType,String wptn,String keyWord) {
+        return Api.getDefault(HostType.NETEASE_NEWS_VIDEO).getWaterSituation(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType, wptn, keyWord)
                 .compose(RxSchedulers.<List<waterSituation>>io_main());
 
 

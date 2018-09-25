@@ -1,5 +1,7 @@
 package com.jaydenxiao.androidfire.ui.main.fragment;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,6 +68,7 @@ public class JiChuTFragment extends BaseFragment  {
 
     @Override
     protected void initView() {
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,8 +97,9 @@ public class JiChuTFragment extends BaseFragment  {
         tabs.setupWithViewPager(viewPager);
         MyUtils.dynamicSetTabLayoutMode(tabs);
         setHasOptionsMenu(true);
-        searchFragment = SearchFragment.newInstance();
         ((AppCompatActivity) getActivity()).setSupportActionBar( toolbar);
+        toolbar.inflateMenu(R.menu.menu_main1);
+        searchFragment=SearchFragment.newInstance();
         searchFragment.setOnSearchClickListener(new IOnSearchClickListener() {
             @Override
             public void OnSearchClick(String keyword) {
@@ -106,10 +111,13 @@ public class JiChuTFragment extends BaseFragment  {
         });
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case  R.id.action_search:
+            case  R.id.action_search1:
+//                if(searchFragment.isAdded()){
+//                    getFragmentManager().beginTransaction().remove(searchFragment).commit();}
                 searchFragment.show(getFragmentManager(), SearchFragment.TAG);
                 break;
         }
@@ -117,7 +125,10 @@ public class JiChuTFragment extends BaseFragment  {
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
+        menu.clear();
+        inflater.inflate(R.menu.menu_main1, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        Log.e("onCreateOptionsMenu====", "JiChuTFragment" );
+
     }
 }

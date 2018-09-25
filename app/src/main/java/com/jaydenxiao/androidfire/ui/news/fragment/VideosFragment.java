@@ -32,8 +32,8 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * des:视频fragment
- * Created by xsf
- * on 2016.09.17:30
+ *
+ *
  */
 public class VideosFragment extends BaseFragment<VideoListPresenter, VideosListModel> implements VideosListContract.View, OnRefreshListener, OnLoadMoreListener {
     @Bind(R.id.irc)

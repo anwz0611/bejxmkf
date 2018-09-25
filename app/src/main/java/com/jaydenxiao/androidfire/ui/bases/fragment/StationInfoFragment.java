@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -28,6 +30,7 @@ import com.jaydenxiao.androidfire.ui.bases.model.StationInfoModel;
 
 import com.jaydenxiao.androidfire.ui.bases.presenter.StationInfoPresenter;
 
+import com.jaydenxiao.androidfire.ui.main.activity.LocationMapActivity;
 import com.jaydenxiao.androidfire.ui.news.activity.WSDActivity;
 import com.jaydenxiao.androidfire.view.CommonRadioGroup;
 import com.jaydenxiao.common.base.BaseFragment;
@@ -116,6 +119,13 @@ public class StationInfoFragment extends BaseFragment<StationInfoPresenter, Stat
                 helper.setText(R.id.textView5, stationInfoBeans.getStlc());
 
                 helper.setText(R.id.textView8, stationInfoBeans.getRvnm());
+                ImageButton map_show=helper.getView(R.id.map_show);
+                map_show.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LocationMapActivity.startAction(getContext());
+                    }
+                });
                 CardView cv = helper.getView(R.id.wsf_cd);
                 cv.setOnClickListener(new View.OnClickListener() {
                     @Override

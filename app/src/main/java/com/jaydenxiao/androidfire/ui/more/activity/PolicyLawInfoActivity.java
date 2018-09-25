@@ -68,6 +68,10 @@ public class PolicyLawInfoActivity extends BaseActivity<PolicyLawInfoPresenter, 
             @Override
             public void convert(ViewHolderHelper helper, PolicyLawInfoBeans policyLawInfoBeans) {
                 helper.setText(R.id.textView9, policyLawInfoBeans.getFilename());
+
+
+
+
             }
         };
         WSListAdapter.openLoadAnimation(new ScaleInAnimation());

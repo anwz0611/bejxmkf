@@ -22,7 +22,7 @@ public interface MapContract {
         Observable<List<waterSituation>> getWaterMapSituationDate(String date);
         Observable<List<patrolRecordBeans>> getPatrolRecordData();
         //请求历史河道水情列表
-        Observable<List<waterSituation>> getWaterSituationData(String newDate, String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn);
+        Observable<List<waterSituation>> getWaterSituationData(String newDate, String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn,String keyWord);
     }
     interface View extends BaseView {
         void returnWaterSituationData(List<waterSituation> waterSituations);
@@ -36,7 +36,7 @@ public interface MapContract {
     abstract static class Presenter extends BasePresenter<MapContract.View, MapContract.Model> {
         public abstract void getWaterMapSituationDataRequest(String date);
         public abstract void getPatrolRecordDataRequest();
-        public abstract void getWaterSituationDataRequest(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn);
+        public abstract void getWaterSituationDataRequest(String newDate,String historyDate,  String flag, String pageSize,String pageNum,  String sortContent, String sortType,String wptn,String keyWord);
 
     }
 }

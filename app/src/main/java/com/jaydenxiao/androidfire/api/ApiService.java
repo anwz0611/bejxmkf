@@ -100,7 +100,8 @@ public interface ApiService {
             @Query("pageNum") String pageNum,
             @Query("sortContent") String sortContent,
             @Query("sortType") String sortType,
-            @Query("wptn") String wptn
+            @Query("wptn") String wptn,
+            @Query("keyWord") String keyWord
     );
 
 

@@ -17,8 +17,8 @@ import rx.functions.Action1;
 
 public class WaterSituationPresenter extends WaterSituationContract.Presenter {
     @Override
-    public void getWaterSituationDataRequest(String newDate,String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn) {
-        mRxManage.add(mModel.getWaterSituationData(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType,wptn).subscribe(new RxSubscriber<List<waterSituation>>(mContext, false) {
+    public void getWaterSituationDataRequest(String newDate,String historyDate, String flag, String pageSize, String pageNum, String sortContent, String sortType, String wptn,String keyWord) {
+        mRxManage.add(mModel.getWaterSituationData(newDate,historyDate,flag,pageSize,pageNum,sortContent,sortType,wptn, keyWord).subscribe(new RxSubscriber<List<waterSituation>>(mContext, false) {
             @Override
             protected void _onNext(List<waterSituation> waterSituations) {
                 mView.returnWaterSituationData(waterSituations);

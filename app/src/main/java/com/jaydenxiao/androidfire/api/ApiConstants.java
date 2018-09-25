@@ -21,8 +21,8 @@ public class ApiConstants {
     public static final String END_URL = "-20.html";
     public static final String ENDDETAIL_URL = "/full.html";
 //    public static final String BRJ_URL = "http://192.168.0.131:8080/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
-    public static final String BRJ_URL = "http://124.119.183.142:30002/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
-//    public static final String BRJ_URL = "http://192.168.0.125:80/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
+//    public static final String BRJ_URL = "http://124.119.183.142:30002/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
+    public static final String BRJ_URL = "http://60.13.230.147:30002/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
 //    public static final String BRJ_URL = "http://192.168.0.36:8080/jeeplus/a/szygl/waterManage/interface/"; //布尔津项目
     //布尔津河项目URL
     public static final String waterSituation = BRJ_URL + "waterSituation";// 河道水情列表
